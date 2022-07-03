@@ -16,32 +16,43 @@ function Expenses(props) {
         return expense.date.getFullYear().toString() === filteredYear;
     })
 
-    let expensesContent= <p>No expenses found</p>; // aşağıda bunu uzun uzun yazmaktansa burada bir değişken içine atıyorum, bu kodu daha okunaklı hale getiriyor
+    let expensesContent = <p style={{color: "white"}}>No expenses found</p>; // aşağıda bunu uzun uzun yazmaktansa burada bir değişken içine atıyorum, bu kodu daha okunaklı hale getiriyor
+
+    if (filteredExpenses.length > 0) {
+        expensesContent =
+            filteredExpenses.map((expense) => (
+                <ExpenseItem
+                    key={expense.id}
+                    title={expense.title}
+                    amount={expense.amount}
+                    date={expense.date}
+
+                />
+            ))
+    }
+    else if(filteredYear==='select please'){
+        expensesContent= 
+        props.items.map((expense) => (
+            <ExpenseItem
+                key={expense.id}
+                title={expense.title}
+                amount={expense.amount}
+                date={expense.date}
+
+            />
+        ))
+
+    }
 
 
     return (
 
         <Card className='expenses' >
-            <ExpenseFilter selected={filteredYear} onChangeFilter={filterChangeHandler} />
-
-            {filteredExpenses.length === 0 && {expensesContent}}
-
-            {filteredExpenses.length > 0 &&
-                filteredExpenses.map((expense) => (
-                    <ExpenseItem
-                        key={expense.id}
-                        title={expense.title}
-                        amount={expense.amount}
-                        date={expense.date}
-
-                    />
-                ))
-
-            }
-
-
-
-
+            <ExpenseFilter 
+            selected={filteredYear} 
+            onChangeFilter={filterChangeHandler} 
+            />
+            {expensesContent};
 
         </Card>
 
