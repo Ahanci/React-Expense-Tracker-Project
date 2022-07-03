@@ -30,7 +30,6 @@ function App() {
   
   const addExpenseHandler= expense => {
     // setExpenses([expense, ...expenses]);
-
     setExpenses((prevExpenses)=> {
       return [expense, ...prevExpenses];
     })
